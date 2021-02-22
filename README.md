@@ -1,27 +1,31 @@
-# AngularApp
+## Table of contents
+* [General info](#general-info)
+* [Installation](#installation)
+* [Technologies](#technologies)
+* [Screenshots](#screenshots)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.4.
+## General info
+Web based visualisation app which generates chess heatmaps.
+Data is gathered from around 13k games, every heatmap visualizes the location of pieces or the location of certain game events.
 
-## Development server
+## Installation
+install front-end depenencies
+```
+npm install
+```
+run local server
+```
+ng serve
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Technologies
+Project is created using:
+* Angular 11
+* heatmap.js - https://www.patrick-wied.at/static/heatmapjs/
+* chessboardjs - https://chessboardjs.com/
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Screenshots
+**Most popular first moves from the white side**
+![Main page](src/assets/img/screen1.png)
+**Most popular first moves from the black side**
+![History](src/assets/img/screen2.png)

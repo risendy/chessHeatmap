@@ -1,0 +1,11 @@
+<div id="board1" style="width: 640px; height: 640px;"></div>
+<div class="heatmap" [style.position]="heatmapPosition" style="width: 640px; height: 640px; top:0; left:0;"></div>
+<select [(ngModel)]="selectedOption">
+  <option>1</option>
+  <option>2</option>
+</select>
+<button (click)="changeHeatmap()">Generate</button>
+
+<h4 *ngIf="activeHeatMapHeader">
+  {{activeHeatMapHeader}}
+</h4>
