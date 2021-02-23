@@ -29,3 +29,5 @@ Project is created using:
 ![Main page](src/assets/img/screen1.png)
 **Most popular first moves from the black side**
 ![History](src/assets/img/screen2.png)
+**Last move king position from the both sides**
+![History](src/assets/img/screen3.png)

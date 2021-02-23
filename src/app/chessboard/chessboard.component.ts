@@ -9,7 +9,12 @@ import {symbArr} from '../core/data/symbolic-arr';
 import {MovePositionMapped} from '../core/models/move-position-mapped';
 import {FirstMoveWhite} from '../core/data/first-move-white-data';
 import {FirstMoveBlack} from '../core/data/first-move-black-data';
+import {LastMoveKingPosition} from '../core/data/last-move-king-position-data';
 import {HeatmapTypes} from '../core/models/heatmap-types';
+import {FenGames} from '../core/data/fen-games';
+
+// @ts-ignore
+import * as Chess from 'chess.js';
 
 @Component({
   selector: 'app-chessboard',
@@ -24,8 +29,59 @@ export class ChessboardComponent implements OnInit {
   heatmapInstance: h337;
   moveMappedArray: Array<any> = [];
 
+  getPiecePositions = (game: any, piece: any) => {
+    // @ts-ignore
+    return [].concat(...game.board()).map((p, index) => {
+      // @ts-ignore
+      if (p !== null && p.type === piece.type && p.color === piece.color) {
+        return index;
+      }
+    }).filter(Number.isInteger)
+      .map((pieceIndex) => {
+      // @ts-ignore
+        const row = 'abcdefgh'[pieceIndex % 8];
+      // @ts-ignore
+        const column = Math.ceil((64 - pieceIndex) / 8);
+        return row + column;
+    });
+  }
+
   constructor() {
 
+  }
+
+  generateJson() {
+    let fen: string = '8/8/5pk1/3R2p1/r1r3P1/4bKB1/7N/8 w - - 0 58';
+    let game = new Chess();
+    var resArr: Array<any> = [];
+
+    game.load(fen);
+    const turn = game.turn();
+
+    FenGames.map((x) => {
+      let returnArr: Array<any> = [];
+
+      let fen = x.fen;
+      game.load(fen);
+      const turn = game.turn();
+
+      let kingPosition = this.getPiecePositions(game, {type: 'k', color: turn});
+
+      let find = resArr.find((x: any) => {
+        if (x.move.toString() == kingPosition.toString()){
+          x.times++;
+        }
+
+        return x.move.toString() == kingPosition.toString();
+      });
+
+      if (!find) {
+        let newObj = {move: kingPosition.toString(), times: 1};
+        resArr.push(newObj);
+      }
+    });
+
+    return JSON.stringify(resArr);
   }
 
   initChessBoard(): void {
@@ -91,7 +147,7 @@ export class ChessboardComponent implements OnInit {
       const point: Point = {
         x: Math.floor(resultArr[index].x),
         y: Math.floor(resultArr[index].y),
-        value: resultArr[index].times / 5
+        value: resultArr[index].times / 40
       };
 
       this.points.push(point);
@@ -115,6 +171,11 @@ export class ChessboardComponent implements OnInit {
         this.activeHeatMapHeader = HeatmapTypes.second;
         const arr2 = this.createMappedArray(FirstMoveBlack, this.moveMappedArray);
         this.drawFromArray(arr2);
+        break;
+      case '3':
+        this.activeHeatMapHeader = HeatmapTypes.third;
+        const arr3 = this.createMappedArray(LastMoveKingPosition, this.moveMappedArray);
+        this.drawFromArray(arr3);
         break;
     }
 
