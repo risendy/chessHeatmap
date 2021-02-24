@@ -7,6 +7,7 @@ import {HeatmapTypes} from '../core/models/heatmap-types';
 import {MoveServiceService} from '../core/services/move-service.service';
 import {DrawServiceService} from '../core/services/draw-service.service';
 import {EnpassantBothSidesData} from '../core/data/enpassant-both-sides-data';
+import {CapturesBothSides} from '../core/data/captures-both-sides';
 
 @Component({
   selector: 'app-chessboard',
@@ -59,6 +60,12 @@ export class ChessboardComponent implements OnInit {
         this.activeHeatMapHeader = HeatmapTypes.fourth;
         const arr4 = this.moveService.createResultArray(EnpassantBothSidesData, this.moveMappedArray);
         this.drawService.drawFromArray(arr4, 1);
+        break;
+      case '5':
+        this.drawService.initHeatmap(90, .8, .1);
+        this.activeHeatMapHeader = HeatmapTypes.fifth;
+        const arr5 = this.moveService.createResultArray(CapturesBothSides, this.moveMappedArray);
+        this.drawService.drawFromArray(arr5, 15);
         break;
     }
   }

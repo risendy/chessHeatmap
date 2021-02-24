@@ -3,6 +3,7 @@ import {MovePosition} from '../models/move-position';
 import {symbArr} from '../data/symbolic-arr';
 import {MovePositionMapped} from '../models/move-position-mapped';
 import {FenGames} from '../data/fen-games';
+import {FenCaptures} from '../data/fen-captures';
 // @ts-ignore
 import * as Chess from 'chess.js';
 import {FenEnpassant} from '../data/fen-enpassant';
@@ -79,12 +80,20 @@ export class MoveServiceService {
     return resultArr;
   }
 
-  generateJsonFromEnpassantArray() {
+  generateJsonFromCaptureArray(): string {
     let game = new Chess();
     var resArr: Array<any> = [];
 
-    FenEnpassant.map((y) => {
+    FenCaptures.map((y) => {
       let cutMove = y.move_san.substring(2);
+
+      if (cutMove[0] === 'x') {
+        cutMove = cutMove.substring(1);
+      }
+
+      if (cutMove.slice(-1) === '+' || cutMove.slice(-1) === '#') {
+          cutMove = cutMove.slice(0, -1);
+      }
 
       let find = resArr.find((x: any) => {
         if (x.move.toString() == cutMove){
@@ -107,7 +116,7 @@ export class MoveServiceService {
     return JSON.stringify(resArr);
   }
 
-  generateJsonFromFenArray() {
+  generateJsonFromFenArray(): string {
     let game = new Chess();
     var resArr: Array<any> = [];
 
