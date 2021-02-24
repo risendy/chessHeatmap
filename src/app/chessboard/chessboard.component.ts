@@ -6,6 +6,7 @@ import {LastMoveKingPosition} from '../core/data/last-move-king-position-data';
 import {HeatmapTypes} from '../core/models/heatmap-types';
 import {MoveServiceService} from '../core/services/move-service.service';
 import {DrawServiceService} from '../core/services/draw-service.service';
+import {EnpassantBothSidesData} from '../core/data/enpassant-both-sides-data';
 
 @Component({
   selector: 'app-chessboard',
@@ -52,6 +53,12 @@ export class ChessboardComponent implements OnInit {
         this.activeHeatMapHeader = HeatmapTypes.third;
         const arr3 = this.moveService.createResultArray(LastMoveKingPosition, this.moveMappedArray);
         this.drawService.drawFromArray(arr3, 4);
+        break;
+      case '4':
+        this.drawService.initHeatmap(90, .8, .1);
+        this.activeHeatMapHeader = HeatmapTypes.fourth;
+        const arr4 = this.moveService.createResultArray(EnpassantBothSidesData, this.moveMappedArray);
+        this.drawService.drawFromArray(arr4, 1);
         break;
     }
   }

@@ -26,8 +26,10 @@ Project is created using:
 
 ## Screenshots
 **Most popular first moves from the white side**
-![Main page](src/assets/img/screen1.png)
+![Heatmap1](src/assets/img/screen1.png)
 **Most popular first moves from the black side**
-![History](src/assets/img/screen2.png)
+![Heatmap2](src/assets/img/screen2.png)
 **Last move king position from the both sides**
-![History](src/assets/img/screen3.png)
+![Heatmap3](src/assets/img/screen3.png)
+**En passant captures from the both sides **
+![Heatmap4](src/assets/img/screen4.png)

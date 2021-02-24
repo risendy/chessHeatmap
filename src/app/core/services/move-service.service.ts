@@ -5,6 +5,7 @@ import {MovePositionMapped} from '../models/move-position-mapped';
 import {FenGames} from '../data/fen-games';
 // @ts-ignore
 import * as Chess from 'chess.js';
+import {FenEnpassant} from '../data/fen-enpassant';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,34 @@ export class MoveServiceService {
     return resultArr;
   }
 
+  generateJsonFromEnpassantArray() {
+    let game = new Chess();
+    var resArr: Array<any> = [];
+
+    FenEnpassant.map((y) => {
+      let cutMove = y.move_san.substring(2);
+
+      let find = resArr.find((x: any) => {
+        if (x.move.toString() == cutMove){
+          x.times++;
+        }
+
+        return x.move.toString() == cutMove.toString();
+      });
+
+      if (!find) {
+        let newObj = {move: cutMove, times: 1};
+        resArr.push(newObj);
+      }
+    })
+
+    resArr.sort((a, b) => {
+      return parseFloat(b.times) - parseFloat(a.times);
+    });
+
+    return JSON.stringify(resArr);
+  }
+
   generateJsonFromFenArray() {
     let game = new Chess();
     var resArr: Array<any> = [];
@@ -105,6 +134,10 @@ export class MoveServiceService {
         let newObj = {move: kingPosition.toString(), times: 1};
         resArr.push(newObj);
       }
+    });
+
+    resArr.sort((a, b) => {
+      return parseFloat(b.times) - parseFloat(a.times);
     });
 
     return JSON.stringify(resArr);
